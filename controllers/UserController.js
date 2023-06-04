@@ -1,6 +1,7 @@
 import {UserModel} from '../models/UserModel.js'
 import {generateToken} from '../untils/until.js'
 import expressAsyncHandler from 'express-async-handler'
+import bcrypt from 'bcryptjs'
 
 export const getAllUser = (req, res) => {
     UserModel.find({})
@@ -13,7 +14,7 @@ export const registerUser = expressAsyncHandler(async (req, res) => {
         // _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: bcrypt.hashSync(req.body.password, 10),
         address: '',
         phone: '',
         isAdmin: false,
